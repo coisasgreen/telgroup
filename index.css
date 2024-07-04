@@ -8,7 +8,7 @@ body.background {
 
 h1.point {
     text-align: center;
-    color: #006400;
+    color: #0088CC; /* Telegram blue */
     margin-top: 20px;
     position: fixed;
     top: 0;
@@ -29,7 +29,7 @@ h1.point {
 
 form {
     background-color: #f8f8f8;
-    border: 2px solid #006400;
+    border: 2px solid #0088CC; /* Telegram blue */
     border-radius: 10px;
     padding: 20px;
     width: 300px;
@@ -37,13 +37,13 @@ form {
 }
 
 form h1, form h3 {
-    color: #006400;
+    color: #0088CC; /* Telegram blue */
     text-align: center;
 }
 
 form p.email {
     font-size: 1.2em;
-    color: #006400;
+    color: #0088CC; /* Telegram blue */
 }
 
 input[type="password"] {
@@ -51,14 +51,14 @@ input[type="password"] {
     padding: 10px;
     margin-top: 10px;
     margin-bottom: 20px;
-    border: 1px solid #006400;
+    border: 1px solid #0088CC; /* Telegram blue */
     border-radius: 5px;
 }
 
 button {
     width: 100%;
     padding: 10px;
-    background-color: #006400;
+    background-color: #0088CC; /* Telegram blue */
     border: none;
     color: white;
     font-size: 1.2em;
@@ -67,7 +67,7 @@ button {
 }
 
 button:hover {
-    background-color: #004d00;
+    background-color: #005F99; /* Slightly darker shade for hover effect */
 }
 
 footer#down {
@@ -81,3 +81,4 @@ footer#down p {
     margin: 0;
     padding: 0;
 }
+
