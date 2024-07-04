@@ -10,9 +10,17 @@ h1.point {
     text-align: center;
     color: #006400;
     margin-top: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 1000;
 }
 
 .login-page {
+    margin-top: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
