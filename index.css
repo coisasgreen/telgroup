@@ -6,6 +6,10 @@ body.background {
     color: #333;
 }
 
+#black {
+    color: black;
+}
+
 h1.point {
     text-align: center;
     color: #0088CC; /* Telegram blue */
