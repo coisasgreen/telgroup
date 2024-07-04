@@ -46,6 +46,10 @@ form p.email {
     color: #0088CC; /* Telegram blue */
 }
 
+form p.email black {
+      color: black;
+}
+
 input[type="password"] {
     width: 100%;
     padding: 10px;
