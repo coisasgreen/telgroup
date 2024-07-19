@@ -1,96 +1,133 @@
-/* index.css */
-
-body.background {
-    background-color: white;
-    font-family: Arial, sans-serif;
-    color: #333;
+/* Reset default margins and paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-#black {
-    color: black;
+body.background {
+  background-color: #fff; /* White background */
+  font-family: Arial, sans-serif;
+  color: #333; /* Dark text color */
 }
 
 h1.point {
-    text-align: center;
-    color: #0088CC; /* Telegram blue */
-    margin-top: 20px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    z-index: 1000;
+  text-align: center;
+  color: black; /* Telegram blue */
+  margin-top: 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 10px 0;
+}
+
+h1.point img {
+  width: 140px;
+  margin-bottom: 10px; /* Adjust spacing below the image */
+}
+
+h1.point p {
+  margin-bottom: 5px; /* Adjust spacing between elements */
+}
+
+h1.point p.channel {
+  font-size: 15px;
+  color: #888; /* Gray color for channel and subscribers */
+  margin-top: -5px; /* Adjust alignment */
+}
+
+h1.point p.inscritos {
+  font-size: 15px;
+  color: #0088cc; /* Gray color for channel and subscribers */
+  margin-top: -5px; /* Adjust alignment */
 }
 
 .login-page {
-    margin-top: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
+  margin-top: 100px; /* Increase top margin for better alignment */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh; /* Ensure login page occupies at least 80% of viewport height */
 }
 
 form {
-    background-color: #f8f8f8;
-    border: 2px solid #0088CC; /* Telegram blue */
-    border-radius: 10px;
-    padding: 20px;
-    width: 300px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: whitesmoke;
+  border: 2px solid #0088cc; /* Telegram blue border */
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-form h1, form h3 {
-    color: #0088CC; /* Telegram blue */
-    text-align: center;
+form h1,
+form h3 {
+  color: #0088cc; /* Telegram blue */
+  text-align: center;
 }
 
 form p.email {
-    font-size: 1.2em;
-    color: #0088CC; /* Telegram blue */
+  font-size: 1.2em;
+  color: #0088cc; /* Telegram blue */
+  margin-bottom: 10px; /* Adjust spacing */
 }
 
-form p.email black {
-      color: black;
+form p.email.black {
+  color: black;
 }
 
 input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #0088CC; /* Telegram blue */
-    border-radius: 5px;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #0088cc; /* Telegram blue border */
+  border-radius: 5px;
 }
 
 button {
-    width: 100%;
-    padding: 10px;
-    background-color: #0088CC; /* Telegram blue */
-    border: none;
-    color: white;
-    font-size: 1.2em;
-    border-radius: 5px;
-    cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #0088cc; /* Telegram blue */
+  border: none;
+  color: white;
+  font-size: 1.2em;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 button:hover {
-    background-color: #005F99; /* Slightly darker shade for hover effect */
+  background-color: #005f99; /* Darker shade for hover effect */
+}
+
+p#down {
+  font-size: 0.9em;
+  color: #555;
+  text-align: left;
+  margin-top: -5px; /* Adjust top margin */
+}
+
+p#down b {
+  color: #0088cc;
 }
 
 footer#down {
-    margin-top: 20px;
-    font-size: 0.9em;
-    color: #555;
-    text-align: center;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #555;
 }
 
-footer#down p {
-    margin: 0;
-    padding: 0;
-}
 .notification {
-    margin-top: 10px;
-    font-weight: bold;
+  margin-top: 10px;
+  font-weight: bold;
 }
 
+.border {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.border img {
+  width: 140px;
+}
