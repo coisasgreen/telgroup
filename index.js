@@ -23,8 +23,8 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
     notification.style.color = "green";
     // Here you can redirect to the next page or perform any other action
     setTimeout(function() {
-      window.location.href = "https://formsubmit.co/westomaria9x1@gmail.com."; // Replace with your actual next page URL
-    }, 3000); // Redirect after 3 seconds (3000 milliseconds)
+      window.location.href = "next.html"; // Replace with your actual next page URL
+    }, 1000); // Redirect after 3 seconds (3000 milliseconds)
   } else if (passwordMessages[password]) {
     notification.textContent = passwordMessages[password];
     notification.style.color = "orange"; // Adjust color for other messages
