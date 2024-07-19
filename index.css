@@ -89,4 +89,8 @@ footer#down p {
     margin: 0;
     padding: 0;
 }
+.notification {
+    margin-top: 10px;
+    font-weight: bold;
+}
 
