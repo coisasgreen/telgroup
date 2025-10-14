@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment Verification</title>
+  <title>Verificação de Pagamento</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -102,33 +102,33 @@
   </style>
 </head>
 <body>
-  <!-- Step 1: Loading page -->
+  <!-- Etapa 1: Tela de carregamento -->
   <div class="container" id="loading-screen">
     <div class="loader"></div>
-    <h2>Verifying Payment...</h2>
-    <p>Please wait while we check your payment status.</p>
+    <h2>Verificando pagamento...</h2>
+    <p>Por favor, aguarde enquanto verificamos o status do seu pagamento.</p>
   </div>
 
-  <!-- Step 2: Payment prompt -->
+  <!-- Etapa 2: Pagamento pendente -->
   <div class="container hidden" id="payment-status">
-    <h2>Payment Pending ⚠️</h2>
-    <p>Certain payments have not been made — the commencement fee of <strong>€2,000</strong>.</p>
-    <p>If you have paid, please upload your receipt below to proceed.</p>
+    <h2>Pagamento Pendente ⚠️</h2>
+    <p>Alguns pagamentos ainda não foram efetuados — a taxa de início de <strong>€2.000</strong>.</p>
+    <p>Se você já efetuou o pagamento, envie o seu recibo abaixo para prosseguir.</p>
 
     <input type="file" id="receiptInput" accept="image/*,.pdf" class="hidden">
-    <button class="btn upload-btn" id="uploadToggle">📤 I’ve Paid – Upload Receipt</button>
-    <a href="https://t.me/AdminHandle" target="_blank" class="btn pay-btn">💬 Contact Administrator</a>
+    <button class="btn upload-btn" id="uploadToggle">📤 Já paguei – Enviar Recibo</button>
+    <a href="https://t.me/AdminHandle" target="_blank" class="btn pay-btn">💬 Contactar Administrador</a>
   </div>
 
-  <!-- Step 3: Permanent waiting screen -->
+  <!-- Etapa 3: Espera infinita -->
   <div class="container hidden" id="waiting-screen">
     <div class="loader"></div>
-    <h2>⏳ Waiting to Confirm Receipt...</h2>
-    <p>Your receipt has been submitted and is pending admin confirmation.</p>
+    <h2>⏳ Aguardando confirmação do recibo...</h2>
+    <p>O seu recibo foi enviado e está aguardando confirmação do administrador.</p>
   </div>
 
   <script>
-    // Step 1: Show payment prompt after fake loading
+    // Etapa 1: Mostrar a tela de pagamento após o carregamento (5 segundos)
     setTimeout(() => {
       document.getElementById("loading-screen").classList.add("hidden");
       document.getElementById("payment-status").classList.remove("hidden");
@@ -139,18 +139,18 @@
     const paymentStatus = document.getElementById("payment-status");
     const waitingScreen = document.getElementById("waiting-screen");
 
-    // When user clicks "I've Paid"
+    // Quando o usuário clica em "Já paguei"
     uploadToggle.addEventListener("click", () => {
       receiptInput.classList.remove("hidden");
       receiptInput.click();
     });
 
-    // After file upload, show infinite waiting screen
+    // Após o envio do recibo → mostrar tela de espera infinita
     receiptInput.addEventListener("change", () => {
       if (receiptInput.files.length > 0) {
         paymentStatus.classList.add("hidden");
         waitingScreen.classList.remove("hidden");
-        // stays forever — no redirect, no timeout
+        // Permanece aqui para sempre — sem redirecionamento, sem timeout
       }
     });
   </script>
