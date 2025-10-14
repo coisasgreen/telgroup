@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FELÍCIO TIPS - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: #f4f4f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .container {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      animation: fadeIn 1s ease;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .logo {
+      max-width: 200px;
+      margin-bottom: 1rem;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+    input[type='password'] {
+      padding: 0.8rem;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    button {
+      padding: 0.8rem;
+      width: 100%;
+      background-color: #009900;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #007a00;
+    }
+    button:disabled {
+      background-color: #999999;
+      cursor: not-allowed;
+    }
+    .message {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    .loading-page {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .spinner {
+      margin-top: 1rem;
+      width: 40px;
+      height: 40px;
+      border: 4px solid #ccc;
+      border-top-color: #009900;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Pending message styles */
+    .pending-message {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: #cc9900;
+      font-weight: bold;
+    }
+    .pending-spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid #ccc;
+      border-top-color: #cc9900;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="login-box">
+    <img src="WhatsApp Image 2025-05-10 at 2.28.25 AM.jpeg" alt="Logo FELÍCIO TIPS" class="logo" />
+    <h2>Digite o Código de Acesso</h2>
+    <input type="password" id="password" placeholder="Digite a senha..." />
+    <button onclick="checkPassword()">Entrar</button>
+    <div class="message" id="message"></div>
+  </div>
+
+  <div class="container loading-page" id="loading-box">
+    <img src="WhatsApp Image 2025-05-10 at 2.28.25 AM.jpeg" alt="Logo FELÍCIO TIPS" class="logo" />
+    <h2>Acesso Confirmado</h2>
+    <p>Carregando seu painel...</p>
+    <div class="spinner"></div>
+  </div>
+
+  <script>
+    function checkPassword() {
+      const pwdInput = document.getElementById('password');
+      const message = document.getElementById('message');
+      const loginBox = document.getElementById('login-box');
+      const loadingBox = document.getElementById('loading-box');
+      const button = loginBox.querySelector('button');
+
+      const responses = {
+        'V!P2025#Ace': true,
+        'Fel#D1n8sS': true,
+        'S3cur3#W1n$': 'Por favor, obtenha um novo código, pois este já expirou.',
+        'V1P_EntRy#77': 'Tente fazer login novamente, algo deu errado :(',
+        'W!nn3rZ0n3!': 'Confirme se seu código está completamente ativado antes de tentar novamente.',
+        'Fel@D2n8s7': 'pending'
+      };
+
+      const pwd = pwdInput.value.trim();
+
+      if (responses[pwd] === true) {
+        // Successful login - reset UI and redirect
+        message.textContent = '';
+        pwdInput.disabled = false;
+        button.disabled = false;
+        loginBox.style.display = 'none';
+        loadingBox.style.display = 'flex';
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 5500);
+      } else if (responses[pwd] === 'pending') {
+        // Pending login - disable input/button and show pending message with spinner
+        pwdInput.disabled = true;
+        button.disabled = true;
+        message.innerHTML = `
+          <div class="pending-message">
+            <div class="pending-spinner"></div>
+            <span>Login pending... Waiting for management confirmation. Please be patient or contact management.</span>
+          </div>
+        `;
+      } else if (responses[pwd]) {
+        // Known error
+        pwdInput.disabled = false;
+        button.disabled = false;
+        message.textContent = responses[pwd];
+        message.style.color = '#cc0000';
+      } else {
+        // Unknown password
+        pwdInput.disabled = false;
+        button.disabled = false;
+        message.textContent = 'Senha incorreta. Tente novamente.';
+        message.style.color = '#cc0000';
+      }
+    }
+  </script>
+</body>
+</html>

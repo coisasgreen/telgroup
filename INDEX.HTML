@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>COISAS - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(120deg, #296399, #ffffff);
+      animation: bgAnim 15s ease-in-out infinite;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 400px;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      text-align: center;
+      border: 1px solid #e6e6e6;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.8s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .logo {
+      width: 80px;
+      margin: 0 auto 1rem;
+      display: block;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0); }
+    }
+
+    h2 {
+      color: #007BFF;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      animation: fadeIn 0.8s forwards;
+      animation-delay: 0.2s;
+    }
+
+    p {
+      color: #555;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      animation: fadeIn 0.8s forwards;
+      animation-delay: 0.4s;
+    }
+
+    .line {
+      height: 1px;
+      background: #e0e0e0;
+      margin: 1.5rem 0;
+      animation: fadeIn 0.8s forwards;
+      animation-delay: 0.6s;
+    }
+
+    .input-group {
+      margin-bottom: 1rem;
+      text-align: left;
+      animation: fadeIn 0.8s forwards;
+      animation-delay: 0.8s;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+      color: #333;
+      font-size: 0.9rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #007BFF;
+      box-shadow: 0 0 8px rgba(0,123,255,0.4);
+      transform: scale(1.02);
+    }
+
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      background: #007BFF;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      animation: fadeIn 0.8s forwards;
+      animation-delay: 1s;
+    }
+
+    button:hover {
+      background: #0056b3;
+      box-shadow: 0 0 12px rgba(0,123,255,0.5);
+      transform: scale(1.03);
+    }
+
+    #error-message {
+      margin-top: 15px;
+      color: red;
+      font-size: 14px;
+      min-height: 18px;
+      animation: fadeIn 0.8s forwards;
+      animation-delay: 1.2s;
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 1.5rem;
+      }
+      h2 {
+        font-size: 1.3rem;
+      }
+      .logo {
+        width: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <img src="/WhatsApp Image 2025-05-13 at 8.17.11 PM.jpeg" alt="COISAS Logo" class="logo">
+    <h2>Seja bem-vindo ao COISAS GREEN VIP GRUPO</h2>
+    <p>20.7K inscritos</p>
+    <p>Insira seu código de assinatura para continuar</p>
+
+    <div class="line"></div>
+
+    <div class="input-group">
+      <label for="subscription">Código de Assinatura</label>
+      <input type="text" id="subscription" name="subscription" placeholder="Digite seu código aqui">
+    </div>
+
+    <div class="line"></div>
+
+    <button onclick="handleLogin()">Entrar</button>
+    <div id="error-message"></div>
+  </div>
+
+  <script>
+    const validCodes = {
+      "Q!4bL9#r": 365,
+      "M@3zV6*w": 30,
+      "D7$kL2#m": 7
+    };
+
+    const correctCode = "Fel@D2n8s7";
+    const expiredCode = "S3cur3#W1n$";
+    const pendingActivation = "W!nn3rZOn3!";
+    const error = "V1P_EntRy#77";
+
+    function handleLogin() {
+      const input = document.getElementById("subscription").value;
+      const errorBox = document.getElementById("error-message");
+
+      if (validCodes[input]) {
+        const days = validCodes[input];
+        const expiryDate = new Date();
+        expiryDate.setDate(expiryDate.getDate() + days);
+        localStorage.setItem("subscriptionExpiry", expiryDate.toISOString());
+        window.location.href = "dashboard.html";
+      }
+      else if (input === pendingActivation) {
+        errorBox.innerHTML = "Confirme se seu código está completamente ativado antes de tentar novamente.";
+      }
+      else if (input === expiredCode) {
+        errorBox.innerHTML = "Por favor, ative um novo código, pois este já expirou.";
+      }
+      else if (input === correctCode) {
+        errorBox.innerHTML = "Login pendente... Aguardando aprovação da gerência. Aguarde ou entre em contato com a gerência por e-mail. Um link para redirecioná-los ou direcioná-los automaticamente para o e-mail.";
+      }
+      else if (input === error) {
+        errorBox.innerHTML = "Por favor, tente fazer login novamente, algo deu errado :(.";
+      }
+      else {
+        errorBox.innerHTML = "Código incorreto ou expirado.";
+      }
+    }
+  </script>
+</body>
+</html>

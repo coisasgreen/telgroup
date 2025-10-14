@@ -1,0 +1,121 @@
+<!-- =================== TIMER PAGE =================== -->
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Status da Assinatura - COISAS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5faff, #e6f7ff);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .container {
+      background-color: white;
+      padding: 2rem 3rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+    }
+
+    .logo {
+      height: 100px;
+      animation: float 3s ease-in-out infinite;
+      margin-bottom: 1rem;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0); }
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #0088cc;
+    }
+
+    #countdown {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .expired {
+      color: red;
+    }
+
+    footer {
+      margin-top: 2rem;
+      color: #888;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <img src="WhatsApp Image 2025-05-13 at 8.17.11 PM.jpeg" alt="Logo" class="logo" />
+    <h1>Status da Sua Assinatura</h1>
+    <div id="countdown">Carregando...</div>
+  </div>
+
+  <footer>
+    &copy; 2025 COISAS GRUPO VIP. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    function startCountdown() {
+      const countdownEl = document.getElementById("countdown");
+      const expiryStr = localStorage.getItem("subscriptionExpiry");
+
+      if (!expiryStr) {
+        countdownEl.textContent = "Assinatura não ativada";
+        countdownEl.classList.add("expired");
+        return;
+      }
+
+      const expiry = new Date(expiryStr);
+
+      function updateTimer() {
+        const now = new Date();
+        const diff = expiry - now;
+
+        if (diff <= 0) {
+          countdownEl.textContent = "Assinatura expirada";
+          countdownEl.classList.add("expired");
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        countdownEl.textContent = `${days}d ${hours}h ${minutes}min ${seconds}s`;
+      }
+
+      updateTimer();
+      setInterval(updateTimer, 1000);
+    }
+
+    startCountdown();
+  </script>
+
+</body>
+</html>
