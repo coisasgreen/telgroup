@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Verificação de Pagamento</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -33,16 +34,8 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    h2 {
-      color: #0077b6;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 0.95rem;
-      color: #555;
-      margin-bottom: 20px;
-    }
+    h2 { color: #0077b6; margin-bottom: 10px; }
+    p { font-size: 0.95rem; color: #555; margin-bottom: 20px; }
 
     .btn {
       display: inline-block;
@@ -55,27 +48,13 @@
       cursor: pointer;
     }
 
-    .pay-btn {
-      background: #0077b6;
-      color: white;
-    }
+    .pay-btn { background: #0077b6; color: white; }
+    .pay-btn:hover { background: #005f8d; }
 
-    .pay-btn:hover {
-      background: #005f8d;
-    }
+    .upload-btn { background: #28a745; color: white; }
+    .upload-btn:hover { background: #218838; }
 
-    .upload-btn {
-      background: #28a745;
-      color: white;
-    }
-
-    .upload-btn:hover {
-      background: #218838;
-    }
-
-    .hidden {
-      display: none;
-    }
+    .hidden { display: none; }
 
     .loader {
       border: 6px solid #e3f2fd;
@@ -87,9 +66,7 @@
       animation: spin 1s linear infinite;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     input[type="file"] {
       margin: 15px 0;
@@ -99,61 +76,87 @@
       cursor: pointer;
       width: 100%;
     }
+
+    #error-msg {
+      color: red;
+      font-weight: 600;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
-  <!-- Etapa 1: Tela de carregamento -->
   <div class="container" id="loading-screen">
     <div class="loader"></div>
     <h2>Verificando pagamento...</h2>
     <p>Por favor, aguarde enquanto verificamos o status do seu pagamento.</p>
   </div>
 
-  <!-- Etapa 2: Pagamento pendente -->
   <div class="container hidden" id="payment-status">
     <h2>Pagamento Pendente ⚠️</h2>
-    <p>Alguns pagamentos ainda não foram efetuados — a taxa de início de <strong>€2.000</strong>.</p>
-    <p>Se você já efetuou o pagamento, envie o seu recibo abaixo para prosseguir.</p>
+    <p>Envie o recibo do seu pagamento para continuar.</p>
 
     <input type="file" id="receiptInput" accept="image/*,.pdf" class="hidden">
     <button class="btn upload-btn" id="uploadToggle">📤 Já paguei – Enviar Recibo</button>
+    <p id="error-msg"></p>
     <a href="https://t.me/coisasgreenadmin" target="_blank" class="btn pay-btn">💬 Contactar Administrador</a>
   </div>
 
-  <!-- Etapa 3: Espera infinita -->
   <div class="container hidden" id="waiting-screen">
     <div class="loader"></div>
-    <h2>⏳ Aguardando confirmação do recibo...</h2>
-    <p>O seu recibo foi enviado e está aguardando confirmação do administrador.</p>
+    <h2>⏳ Aguardando confirmação...</h2>
+    <p>Seu recibo foi validado e o acesso está sendo liberado.</p>
   </div>
 
   <script>
-    // Etapa 1: Mostrar a tela de pagamento após o carregamento (5 segundos)
+    const expectedQR = "https://example.com/dashboard2.html";
+
     setTimeout(() => {
       document.getElementById("loading-screen").classList.add("hidden");
       document.getElementById("payment-status").classList.remove("hidden");
-    }, 5000);
+    }, 3000);
 
     const uploadToggle = document.getElementById("uploadToggle");
     const receiptInput = document.getElementById("receiptInput");
     const paymentStatus = document.getElementById("payment-status");
     const waitingScreen = document.getElementById("waiting-screen");
+    const errorMsg = document.getElementById("error-msg");
 
-    // Quando o usuário clica em "Já paguei"
     uploadToggle.addEventListener("click", () => {
       receiptInput.classList.remove("hidden");
       receiptInput.click();
     });
 
-    // Após o envio do recibo → mostrar tela de espera infinita
     receiptInput.addEventListener("change", () => {
-      if (receiptInput.files.length > 0) {
-        paymentStatus.classList.add("hidden");
-        waitingScreen.classList.remove("hidden");
-        // Permanece aqui para sempre — sem redirecionamento, sem timeout
-      }
+      const file = receiptInput.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const code = jsQR(imageData.data, canvas.width, canvas.height);
+
+          if (code && code.data.trim() === expectedQR) {
+            paymentStatus.classList.add("hidden");
+            waitingScreen.classList.remove("hidden");
+            setTimeout(() => {
+              window.location.href = "dashboard2.html";
+            }, 3000);
+          } else {
+            errorMsg.textContent = "❌ Recibo inválido — QR code não corresponde.";
+          }
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
     });
   </script>
 </body>
 </html>
-
